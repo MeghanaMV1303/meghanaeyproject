@@ -11,14 +11,23 @@ import {
   ArrowRight,
   PiggyBank,
   Wallet,
-  Trophy
+  Trophy,
+  Globe
 } from "lucide-react";
+import { Link } from "react-router-dom";
+import { useState } from "react";
 
 interface FinancialDashboardProps {
   userName: string;
 }
 
 export function FinancialDashboard({ userName }: FinancialDashboardProps) {
+  const [isHindi, setIsHindi] = useState(true);
+
+  const toggleLanguage = () => {
+    setIsHindi(!isHindi);
+  };
+
   return (
     <div className="min-h-screen bg-gradient-background">
       {/* Header */}
@@ -33,8 +42,9 @@ export function FinancialDashboard({ userName }: FinancialDashboardProps) {
               <p className="text-sm text-muted-foreground">आर्थिक सशक्तिकरण</p>
             </div>
           </div>
-          <Button variant="outline" size="sm">
-            हिंदी / English
+          <Button variant="outline" size="sm" onClick={toggleLanguage}>
+            <Globe className="h-4 w-4 mr-2" />
+            {isHindi ? "English" : "हिंदी"}
           </Button>
         </div>
       </header>
@@ -109,38 +119,50 @@ export function FinancialDashboard({ userName }: FinancialDashboardProps) {
               <Progress value={16.3} className="h-3" />
             </div>
             <div className="flex space-x-3">
-              <Button variant="warm" size="sm">
-                <Coins className="h-4 w-4" />
-                बचत जोड़ें / Add Savings
-              </Button>
-              <Button variant="outline" size="sm">
-                योजना देखें / View Plan
-              </Button>
+              <Link to="/add-savings">
+                <Button variant="warm" size="sm">
+                  <Coins className="h-4 w-4" />
+                  {isHindi ? "बचत जोड़ें" : "Add Savings"}
+                </Button>
+              </Link>
+              <Link to="/view-plan">
+                <Button variant="outline" size="sm">
+                  {isHindi ? "योजना देखें" : "View Plan"}
+                </Button>
+              </Link>
             </div>
           </CardContent>
         </Card>
 
         {/* Quick Actions */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-          <Button variant="large" className="h-20 flex-col space-y-2 p-4">
-            <BookOpen className="h-6 w-6" />
-            <span className="text-sm">सीखें / Learn</span>
-          </Button>
+          <Link to="/learning">
+            <Button variant="large" className="h-20 flex-col space-y-2 p-4 w-full">
+              <BookOpen className="h-6 w-6" />
+              <span className="text-sm">{isHindi ? "सीखें" : "Learn"}</span>
+            </Button>
+          </Link>
           
-          <Button variant="success" className="h-20 flex-col space-y-2 p-4">
-            <Wallet className="h-6 w-6" />
-            <span className="text-sm">बजट / Budget</span>
-          </Button>
+          <Link to="/budget">
+            <Button variant="success" className="h-20 flex-col space-y-2 p-4 w-full">
+              <Wallet className="h-6 w-6" />
+              <span className="text-sm">{isHindi ? "बजट" : "Budget"}</span>
+            </Button>
+          </Link>
           
-          <Button variant="warm" className="h-20 flex-col space-y-2 p-4">
-            <Users className="h-6 w-6" />
-            <span className="text-sm">समुदाय / Community</span>
-          </Button>
+          <Link to="/community">
+            <Button variant="warm" className="h-20 flex-col space-y-2 p-4 w-full">
+              <Users className="h-6 w-6" />
+              <span className="text-sm">{isHindi ? "समुदाय" : "Community"}</span>
+            </Button>
+          </Link>
           
-          <Button variant="outline" className="h-20 flex-col space-y-2 p-4">
-            <TrendingUp className="h-6 w-6" />
-            <span className="text-sm">निवेश / Invest</span>
-          </Button>
+          <Link to="/investment">
+            <Button variant="outline" className="h-20 flex-col space-y-2 p-4 w-full">
+              <TrendingUp className="h-6 w-6" />
+              <span className="text-sm">{isHindi ? "निवेश" : "Invest"}</span>
+            </Button>
+          </Link>
         </div>
 
         {/* Learning Progress */}
